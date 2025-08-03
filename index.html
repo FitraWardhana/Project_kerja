@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Productivity Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <style>
+        /* Custom animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-indigo-700 text-white">
+                <div class="flex items-center justify-center h-16 px-4 border-b border-indigo-600">
+                    <div class="flex items-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/05743592-8b01-4287-a2f3-7aa49e596e55.png" alt="Circular company logo with modern blue gradient and abstract icon" class="h-8 w-8 rounded-full">
+                        <span class="ml-2 text-xl font-bold">WorkAI</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto">
+                    <nav class="space-y-2">
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg bg-indigo-800">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            Dashboard
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-800">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            Attendance
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-800">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                            Work Reports
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-800">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Tickets/Tasks
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-800">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Analytics
+                        </a>
+                    </nav>
+                    <div class="mt-auto px-4 py-6">
+                        <div class="bg-indigo-800 rounded-lg px-4 py-3">
+                            <div class="flex items-center">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9406e16d-021d-416a-b46f-9b10ee7f1e3d.png" alt="User profile picture with neutral expression wearing business casual attire" class="h-10 w-10 rounded-full">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium">John Doe</p>
+                                    <p class="text-xs text-indigo-300">Admin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top navigation -->
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200 bg-white">
+                <div class="flex items-center md:hidden">
+                    <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                    <div class="relative">
+                        <button class="flex items-center text-sm font-medium focus:outline-none">
+                            <span class="sr-only">Open user menu</span>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ace736e2-3676-4caf-9ce9-e9ead2edca0d.png" alt="Small circular user profile picture showing shoulders and neutral expression" class="h-8 w-8 rounded-full">
+                            <span class="ml-2 hidden md:inline-block">John Doe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="flex-1 overflow-auto p-6 bg-gray-50">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <!-- Attendance Card -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-lg font-semibold text-gray-800">Attendance</h2>
+                                <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">Active</span>
+                            </div>
+                            <div id="location-display" class="mt-4 text-sm text-gray-600 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span>Detecting location...</span>
+                            </div>
+                            <div class="mt-6 flex justify-center">
+                                <button id="attendance-btn" class="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors">
+                                    Clock In
+                                </button>
+                            </div>
+                            <div class="mt-6">
+                                <p class="text-sm text-gray-500">Today's record:</p>
+                                <div class="mt-2 space-y-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Clock In:</span>
+                                        <span id="clock-in-time" class="font-medium">--:--</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Clock Out:</span>
+                                        <span id="clock-out-time" class="font-medium">--:--</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Duration:</span>
+                                        <span id="work-duration" class="font-medium text-indigo-600">0h 0m</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Productivity Stats -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                        <div class="p-6">
+                            <h2 class="text-lg font-semibold text-gray-800">Productivity</h2>
+                            <div class="mt-6">
+                                <div class="relative h-40">
+                                    <canvas id="productivityChart"></canvas>
+                                </div>
+                                <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Tasks Completed</p>
+                                        <p id="tasks-completed" class="text-2xl font-bold text-indigo-600">12</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Avg. Focus Time</p>
+                                        <p id="avg-focus-time" class="text-2xl font-bold text-indigo-600">4h 12m</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Efficiency</p>
+                                        <p id="efficiency-score" class="text-2xl font-bold text-indigo-600">87%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                        <div class="p-6">
+                            <h2 class="text-lg font-semibold text-gray-800">AI Recommendations</h2>
+                            <div class="mt-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0763ab37-e214-4baf-8367-5bf14514f9d5.png" alt="AI assistant avatar with friendly digital face and blue accents" class="h-10 w-10 rounded-full">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="bg-indigo-50 rounded-lg p-4">
+                                            <p class="text-sm font-medium text-gray-800">Based on your work patterns, I recommend:</p>
+                                            <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                                                <li>Take a 5-minute break now</li>
+                                                <li>Schedule deep work from 2-4 PM</li>
+                                                <li>Prioritize Ticket #1234 next</li>
+                                            </ul>
+                                        </div>
+                                        <div class="mt-4 flex space-x-2">
+                                            <button class="px-3 py-1 bg-indigo-600 text-white text-xs rounded-full hover:bg-indigo-700">Got it</button>
+                                            <button class="px-3 py-1 bg-white border border-gray-300 text-xs rounded-full hover:bg-gray-50">Show details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Report Form -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1 md:col-span-2">
+                        <div class="p-6">
+                            <h2 class="text-lg font-semibold text-gray-800">Daily Work Report</h2>
+                            <form id="report-form" class="mt-6 space-y-4">
+                                <div>
+                                    <label for="report-date" class="block text-sm font-medium text-gray-700">Date</label>
+                                    <input type="date" id="report-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="">
+                                </div>
+                                <div>
+                                    <label for="report-summary" class="block text-sm font-medium text-gray-700">Summary</label>
+                                    <textarea id="report-summary" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Brief summary of today's work"></textarea>
+                                </div>
+                                <div>
+                                    <label for="report-details" class="block text-sm font-medium text-gray-700">Details</label>
+                                    <textarea id="report-details" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Detailed description of tasks, challenges, and accomplishments"></textarea>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit Report</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Tickets List -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1 md:col-span-3">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-lg font-semibold text-gray-800">Ticket Management</h2>
+                                <button class="px-3 py-1 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700">+ New Ticket</button>
+                            </div>
+                            <div class="mt-6 overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket No</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#1234</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Implement new login feature</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">High</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-15</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#1233</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Bug fixes for dashboard</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Medium</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-10</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-indigo-600">#1232</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Document API endpoints</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Low</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Pending</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-20</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 30%"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date in the report form
+            document.getElementById('report-date').valueAsDate = new Date();
+
+            // Initialize productivity chart
+            const productivityCtx = document.getElementById('productivityChart').getContext('2d');
+            const productivityChart = new Chart(productivityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Productivity Score',
+                        data: [65, 59, 80, 81, 56, 85, 40],
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Simulate geolocation detection
+            setTimeout(() => {
+                document.getElementById('location-display').innerHTML = `
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Office Building, Jakarta (Verified)</span>
+                `;
+            }, 1500);
+
+            // Attendance button functionality
+            const attendanceBtn = document.getElementById('attendance-btn');
+            let clockedIn = false;
+            let clockInTime = null;
+            
+            attendanceBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (!clockedIn) {
+                    // Clock in
+                    clockInTime = new Date();
+                    document.getElementById('clock-in-time').textContent = formatTime(clockInTime);
+                    document.getElementById('clock-out-time').textContent = '--:--';
+                    document.getElementById('work-duration').textContent = '0h 0m';
+                    attendanceBtn.textContent = 'Clock Out';
+                    attendanceBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    attendanceBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                    
+                    // Start work duration timer
+                    if (window.workTimer) clearInterval(window.workTimer);
+                    window.workTimer = setInterval(updateWorkDuration, 1000);
+                    
+                    clockedIn = true;
+                    
+                    // Show notification
+                    showNotification('You have successfully clocked in', 'success');
+                } else {
+                    // Clock out
+                    const clockOutTime = new Date();
+                    document.getElementById('clock-out-time').textContent = formatTime(clockOutTime);
+                    
+                    // Stop work duration timer
+                    if (window.workTimer) clearInterval(window.workTimer);
+                    
+                    attendanceBtn.textContent = 'Clock In';
+                    attendanceBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    attendanceBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                    
+                    clockedIn = false;
+                    
+                    // Generate productivity summary
+                    const duration = (clockOutTime - clockInTime) / (1000 * 6024 * 60);
+                    const productivityScore = Math.min(Math.floor(Math.random() * 20) + 80, 100);
+                    
+                    document.getElementById('tasks-completed').textContent = Math.floor(Math.random() * 5) + 3;
+                    document.getElementById('efficiency-score').textContent = productivityScore + '%';
+                    
+                    // Update productivity chart
+                    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                    const today = new Date().getDay() - 1; // 0-6
+                    
+                    productivityChart.data.datasets[0].data[today] = productivityScore;
+                    productivityChart.update();
+                    
+                    // Show notification
+                    showNotification('You have successfully clocked out. Good work today!', 'success');
+                }
+            });
+            
+            function updateWorkDuration() {
+                if (clockInTime) {
+                    const now = new Date();
+                    const diff = now - clockInTime;
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    document.getElementById('work-duration').textContent = hours + 'h ' + minutes + 'm';
+                }
+            }
+            
+            function formatTime(date) {
+                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+            
+            function showNotification(message, type) {
+                // In a real app, this would show a proper notification
+                console.log(`${type.toUpperCase()}: ${message}`);
+            }
+            
+            // Report form submission
+            document.getElementById('report-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const date = document.getElementById('report-date').value;
+                const summary = document.getElementById('report-summary').value;
+                const details = document.getElementById('report-details').value;
+                
+                if (!summary || !details) {
+                    showNotification('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                // In a real app, this would submit to a server
+                console.log('Report submitted:', { date, summary, details });
+                showNotification('Daily report submitted successfully', 'success');
+                
+                // Reset form
+                this.reset();
+                document.getElementById('report-date').valueAsDate = new Date();
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="flutter_application_1">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>flutter_application_1</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
