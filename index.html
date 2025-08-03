@@ -1,4 +1,42 @@
 <!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="flutter_application_2">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>flutter_application_2</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -68,11 +106,11 @@
             <form id="login-form" class="space-y-4">
                 <div class="flex items-center border-b border-gray-300 py-2">
                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                    <input type="text" id="login-username" class="flex-1 outline-none" placeholder="Username" required value="admin">
+                    <input type="text" id="login-username" class="flex-1 outline-none" placeholder="Username" required>
                 </div>
                 <div class="flex items-center border-b border-gray-300 py-2">
                     <i class="fas fa-lock text-gray-500 mr-2"></i>
-                    <input type="password" id="login-password" class="flex-1 outline-none" placeholder="Password" required value="admin123">
+                    <input type="password" id="login-password" class="flex-1 outline-none" placeholder="Password" required>
                 </div>
                 <div class="flex items-center">
                     <input type="checkbox" id="remember-me" class="mr-2">
@@ -117,15 +155,23 @@
                         </a>
                         <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-blue-200 hover:bg-blue-800" id="report-menu">
                             <i class="fas fa-file-alt mr-3"></i>
-                            Laporan Kerja
+                            Laporan Perbaikan
                         </a>
                         <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-blue-200 hover:bg-blue-800 admin-only" id="ticket-menu" style="display: none;">
                             <i class="fas fa-ticket-alt mr-3"></i>
                             Daftar Tiket
                         </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-blue-200 hover:bg-blue-800 admin-only" id="user-management-menu" style="display: none;">
+                            <i class="fas fa-users mr-3"></i>
+                            Manajemen User
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-blue-200 hover:bg-blue-800 admin-only" id="productivity-menu" style="display: none;">
+                            <i class="fas fa-chart-pie mr-3"></i>
+                            Produktivitas Team
+                        </a>
                         <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-blue-200 hover:bg-blue-800" id="analytics-menu">
                             <i class="fas fa-chart-line mr-3"></i>
-                            Analisis
+                            Analisis Saya
                         </a>
                     </nav>
                     <div class="mt-auto px-2 py-4">
@@ -265,7 +311,7 @@
                                     </div>
                                     <div class="mt-4 grid grid-cols-3 gap-2 text-center">
                                         <div>
-                                            <p class="text-xs text-gray-500">Tugas Selesai</p>
+                                            <p class="text-xs text-gray-500">Perbaikan Selesai</p>
                                             <p id="tasks-completed" class="text-xl font-bold text-blue-600">0</p>
                                         </div>
                                         <div>
@@ -292,7 +338,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-xs text-gray-600" id="ai-recommendation">
-                                                Mulailah hari Anda dengan membuat daftar tugas prioritas. Fokus pada tugas-tugas penting terlebih dahulu.
+                                                Mulailah hari Anda dengan membuat daftar perbaikan prioritas. Fokus pada perbaikan penting terlebih dahulu.
                                             </p>
                                         </div>
                                     </div>
@@ -306,25 +352,32 @@
                         <!-- Submit Report -->
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
                             <div class="p-4">
-                                <h2 class="text-md font-semibold text-gray-800">Laporan Harian</h2>
+                                <h2 class="text-md font-semibold text-gray-800">Laporan Perbaikan</h2>
                                 <form id="report-form" class="mt-3 space-y-3">
                                     <div>
-                                        <label class="block text-xs font-medium text-gray-700">Judul Laporan</label>
-                                        <input type="text" id="report-title" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
+                                        <label class="block text-xs font-medium text-gray-700">Nama Toko</label>
+                                        <input type="text" id="report-store-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-medium text-gray-700">Deskripsi</label>
+                                        <label class="block text-xs font-medium text-gray-700">Kode Toko</label>
+                                        <input type="text" id="report-store-code" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">No Complain Online</label>
+                                        <input type="text" id="report-complain-number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Deskripsi Perbaikan</label>
                                         <textarea id="report-description" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required></textarea>
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-medium text-gray-700">Daftar Tugas</label>
-                                        <div id="tasks-container" class="mt-1 space-y-1">
-                                            <!-- Tasks will be added here -->
-                                        </div>
-                                        <button type="button" id="add-task-btn" class="mt-1 inline-flex items-center px-2 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                            <i class="fas fa-plus mr-1 text-xs"></i>
-                                            Tambah Tugas
-                                        </button>
+                                        <label class="block text-xs font-medium text-gray-700">Status Perbaikan</label>
+                                        <select id="report-status" class="mt-1 block w-full pl-2 pr-8 py-2 text-xs border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md">
+                                            <option value="pending">Pending</option>
+                                            <option value="in-progress">Dalam Proses</option>
+                                            <option value="completed">Selesai</option>
+                                            <option value="proposal">Usulan</option>
+                                        </select>
                                     </div>
                                     <div>
                                         <button type="submit" id="submit-report-btn" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -352,13 +405,27 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <h3 id="report-title-display" class="text-sm font-medium text-gray-900"></h3>
-                                    <p id="report-description-display" class="mt-1 text-xs text-gray-600"></p>
-                                    <div class="mt-3">
-                                        <h4 class="text-xs font-medium text-gray-700">Daftar Tugas</h4>
-                                        <div id="report-tasks-list" class="mt-1 space-y-1">
-                                            <!-- Tasks will be displayed here -->
+                                    <div class="grid grid-cols-2 gap-2 mb-2">
+                                        <div>
+                                            <p class="text-xs text-gray-500">Nama Toko:</p>
+                                            <p id="report-store-name-display" class="text-sm font-medium"></p>
                                         </div>
+                                        <div>
+                                            <p class="text-xs text-gray-500">Kode Toko:</p>
+                                            <p id="report-store-code-display" class="text-sm font-medium"></p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <p class="text-xs text-gray-500">No Complain:</p>
+                                        <p id="report-complain-number-display" class="text-sm font-medium"></p>
+                                    </div>
+                                    <div class="mb-2">
+                                        <p class="text-xs text-gray-500">Deskripsi:</p>
+                                        <p id="report-description-display" class="text-sm"></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Status:</p>
+                                        <span id="report-status-display" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"></span>
                                     </div>
                                 </div>
                             </div>
@@ -401,15 +468,15 @@
                 <div id="report-content" style="display: none;">
                     <div class="bg-white rounded-xl shadow-md overflow-hidden">
                         <div class="p-4">
-                            <h2 class="text-md font-semibold text-gray-800">Riwayat Laporan</h2>
+                            <h2 class="text-md font-semibold text-gray-800">Riwayat Laporan Perbaikan</h2>
                             <div class="mt-3">
                                 <div class="overflow-x-auto">
                                     <table class="min-w-full divide-y divide-gray-200 text-xs">
                                         <thead class="bg-gray-50">
                                             <tr>
                                                 <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                                                <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul</th>
-                                                <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tugas Selesai</th>
+                                                <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Toko</th>
+                                                <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode Toko</th>
                                                 <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                                 <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                             </tr>
@@ -490,6 +557,145 @@
                     </div>
                 </div>
 
+                <!-- User Management Content (hidden by default) -->
+                <div id="user-management-content" style="display: none;">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 mobile-stack">
+                        <!-- Add User Form -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                            <div class="p-4">
+                                <h2 class="text-md font-semibold text-gray-800">Tambah User Baru</h2>
+                                <form id="user-form" class="mt-3 space-y-3">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Nama Lengkap</label>
+                                        <input type="text" id="user-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Username</label>
+                                        <input type="text" id="user-username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Password</label>
+                                        <input type="password" id="user-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Role</label>
+                                        <select id="user-role" class="mt-1 block w-full pl-2 pr-8 py-2 text-xs border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md">
+                                            <option value="Teknisi">Teknisi</option>
+                                            <option value="Administrator">Administrator</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">Departemen</label>
+                                        <select id="user-department" class="mt-1 block w-full pl-2 pr-8 py-2 text-xs border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md">
+                                            <option value="Listrik">Listrik</option>
+                                            <option value="SIPIL">SIPIL</option>
+                                            <option value="CCTV">CCTV</option>
+                                            <option value="IT">IT</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <button type="submit" id="submit-user-btn" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Tambah User
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- User List -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-2">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-md font-semibold text-gray-800">Daftar User</h2>
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="user-search" placeholder="Cari user..." class="mt-1 block pl-2 pr-8 py-2 text-xs border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md">
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="overflow-y-auto" style="max-height: 500px;">
+                                        <table class="min-w-full divide-y divide-gray-200 text-xs">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-3 py-2 text-left">Nama</th>
+                                                    <th class="px-3 py-2 text-left">Username</th>
+                                                    <th class="px-3 py-2 text-left">Role</th>
+                                                    <th class="px-3 py-2 text-left">Departemen</th>
+                                                    <th class="px-3 py-2 text-left">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200" id="user-list">
+                                                <!-- Users will be loaded here -->
+                                                <tr>
+                                                    <td colspan="5" class="px-3 py-4 text-center text-gray-500">Memuat data...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Productivity Content (hidden by default) -->
+                <div id="productivity-content" style="display: none;">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 mobile-stack">
+                        <!-- Team Productivity Chart -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-4">
+                                <h2 class="text-md font-semibold text-gray-800">Produktivitas Team</h2>
+                                <div class="mt-3">
+                                    <div class="relative h-48">
+                                        <canvas id="team-productivity-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Task Distribution -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="p-4">
+                                <h2 class="text-md font-semibold text-gray-800">Distribusi Perbaikan</h2>
+                                <div class="mt-3">
+                                    <div class="relative h-48">
+                                        <canvas id="team-task-distribution-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-2">
+                            <div class="p-4">
+                                <h2 class="text-md font-semibold text-gray-800">Metrik Kinerja Team</h2>
+                                <div class="mt-4">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200 text-xs">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th class="px-3 py-2 text-left">Nama</th>
+                                                    <th class="px-3 py-2 text-left">Total Perbaikan</th>
+                                                    <th class="px-3 py-2 text-left">Selesai</th>
+                                                    <th class="px-3 py-2 text-left">Dalam Proses</th>
+                                                    <th class="px-3 py-2 text-left">Pending</th>
+                                                    <th class="px-3 py-2 text-left">Efisiensi</th>
+                                                    <th class="px-3 py-2 text-left">Rata Jam Kerja</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200" id="team-performance-list">
+                                                <!-- Team performance will be loaded here -->
+                                                <tr>
+                                                    <td colspan="7" class="px-3 py-4 text-center text-gray-500">Memuat data...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Analytics Content (hidden by default) -->
                 <div id="analytics-content" style="display: none;">
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 mobile-stack">
@@ -508,7 +714,7 @@
                         <!-- Task Distribution -->
                         <div class="bg-white rounded-xl shadow-md overflow-hidden">
                             <div class="p-4">
-                                <h2 class="text-md font-semibold text-gray-800">Distribusi Tugas</h2>
+                                <h2 class="text-md font-semibold text-gray-800">Distribusi Perbaikan</h2>
                                 <div class="mt-3">
                                     <div class="relative h-48">
                                         <canvas id="task-distribution-chart"></canvas>
@@ -527,11 +733,11 @@
                                         <p class="mt-1 text-xl font-bold text-blue-600" id="avg-work-hours">0h 0m</p>
                                     </div>
                                     <div class="bg-green-50 rounded-lg p-3">
-                                        <p class="text-xs font-medium text-green-800">Tugas Selesai</p>
+                                        <p class="text-xs font-medium text-green-800">Perbaikan Selesai</p>
                                         <p class="mt-1 text-xl font-bold text-green-600" id="total-completed-tasks">0</p>
                                     </div>
                                     <div class="bg-yellow-50 rounded-lg p-3">
-                                        <p class="text-xs font-medium text-yellow-800">Tugas Tertunda</p>
+                                        <p class="text-xs font-medium text-yellow-800">Perbaikan Tertunda</p>
                                         <p class="mt-1 text-xl font-bold text-yellow-600" id="total-pending-tasks">0</p>
                                     </div>
                                     <div class="bg-purple-50 rounded-lg p-3">
@@ -567,6 +773,10 @@
                 <div>
                     <label class="block text-xs font-medium text-gray-700">Username</label>
                     <p id="profile-username" class="mt-1 text-sm"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700">Departemen</label>
+                    <p id="profile-department" class="mt-1 text-sm"></p>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-700">Bergabung Sejak</label>
@@ -656,6 +866,8 @@
         let productivityChart = null;
         let weeklyProductivityChart = null;
         let taskDistributionChart = null;
+        let teamProductivityChart = null;
+        let teamTaskDistributionChart = null;
 
         // ==================== DOM ELEMENTS ====================
         const loginModal = document.getElementById('login-modal');
@@ -663,12 +875,13 @@
         const loginForm = document.getElementById('login-form');
         const attendanceBtn = document.getElementById('attendance-btn');
         const deleteAttendanceBtn = document.getElementById('delete-attendance');
-        const addTaskBtn = document.getElementById('add-task-btn');
         const reportForm = document.getElementById('report-form');
         const editReportBtn = document.getElementById('edit-report-btn');
         const deleteReportBtn = document.getElementById('delete-report-btn');
         const ticketForm = document.getElementById('ticket-form');
         const ticketFilter = document.getElementById('ticket-filter');
+        const userForm = document.getElementById('user-form');
+        const userSearch = document.getElementById('user-search');
         const profileModal = document.getElementById('profile-modal');
         const logoutBtn = document.getElementById('logout-btn');
         const dropdownLogoutBtn = document.getElementById('dropdown-logout-btn');
@@ -710,6 +923,8 @@
             document.getElementById('attendance-menu').addEventListener('click', showAttendanceContent);
             document.getElementById('report-menu').addEventListener('click', showReportContent);
             document.getElementById('ticket-menu').addEventListener('click', showTicketContent);
+            document.getElementById('user-management-menu').addEventListener('click', showUserManagementContent);
+            document.getElementById('productivity-menu').addEventListener('click', showTeamProductivityContent);
             document.getElementById('analytics-menu').addEventListener('click', showAnalyticsContent);
 
             // Attendance
@@ -717,7 +932,6 @@
             deleteAttendanceBtn.addEventListener('click', deleteAttendance);
 
             // Report
-            addTaskBtn.addEventListener('click', addTask);
             reportForm.addEventListener('submit', submitReport);
             editReportBtn.addEventListener('click', editReport);
             deleteReportBtn.addEventListener('click', deleteReport);
@@ -725,6 +939,10 @@
             // Ticket
             ticketForm.addEventListener('submit', submitTicket);
             ticketFilter.addEventListener('change', filterTickets);
+            
+            // User Management
+            userForm.addEventListener('submit', addUser);
+            userSearch.addEventListener('input', searchUsers);
             
             // Profile and logout
             profileBtn.addEventListener('click', showProfile);
@@ -855,6 +1073,7 @@
             localStorage.setItem('reports', JSON.stringify(db.reports));
             localStorage.setItem('tickets', JSON.stringify(db.tickets));
             localStorage.setItem('notifications', JSON.stringify(db.notifications));
+            localStorage.setItem('users', JSON.stringify(db.users));
         }
 
         // ==================== AUTHENTICATION ====================
@@ -977,6 +1196,7 @@
             document.getElementById('profile-name').textContent = currentUser.name;
             document.getElementById('profile-role').textContent = currentUser.role;
             document.getElementById('profile-username').textContent = currentUser.username;
+            document.getElementById('profile-department').textContent = currentUser.department;
             document.getElementById('profile-join-date').textContent = new Date(currentUser.joinDate).toLocaleDateString('id-ID');
             
             // Calculate stats
@@ -1008,7 +1228,6 @@
             }
         }
 
-        // [REST OF THE CODE REMAINS THE SAME AS YOUR ORIGINAL SCRIPT]
         // ==================== ATTENDANCE SYSTEM ====================
         async function handleAttendance() {
             const btn = document.getElementById('attendance-btn');
@@ -1148,59 +1367,25 @@
         }
 
         // ==================== REPORT SYSTEM ====================
-        function addTask() {
-            const tasksContainer = document.getElementById('tasks-container');
-            const taskItem = document.createElement('div');
-            taskItem.className = 'task-item flex space-x-2 items-center mb-1';
-            taskItem.innerHTML = `
-                <input type="text" class="task-name flex-1 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" placeholder="Nama Tugas" required>
-                <select class="task-status px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs">
-                    <option value="pending">Pending</option>
-                    <option value="in-progress">Dalam Proses</option>
-                    <option value="completed">Selesai</option>
-                </select>
-                <button type="button" class="remove-task-btn px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs">Hapus</button>
-            `;
-            
-            tasksContainer.appendChild(taskItem);
-            
-            // Add event listener to remove button
-            taskItem.querySelector('.remove-task-btn').addEventListener('click', function() {
-                tasksContainer.removeChild(taskItem);
-            });
-        }
-
         function submitReport(e) {
             e.preventDefault();
             
-            const title = document.getElementById('report-title').value;
+            const storeName = document.getElementById('report-store-name').value;
+            const storeCode = document.getElementById('report-store-code').value;
+            const complainNumber = document.getElementById('report-complain-number').value;
             const description = document.getElementById('report-description').value;
-            const tasks = [];
-            
-            document.querySelectorAll('.task-item').forEach(taskItem => {
-                tasks.push({
-                    name: taskItem.querySelector('.task-name').value,
-                    status: taskItem.querySelector('.task-status').value
-                });
-            });
-            
-            if (tasks.length === 0) {
-                alert('Harap tambahkan minimal satu tugas');
-                return;
-            }
-            
-            // Calculate productivity score
-            const completedTasks = tasks.filter(t => t.status === 'completed').length;
-            const productivityScore = Math.round((completedTasks / tasks.length) * 100);
+            const status = document.getElementById('report-status').value;
             
             // Create new report
             const report = {
                 id: Date.now(),
                 userId: currentUser.id,
-                title,
+                userName: currentUser.name,
+                storeName,
+                storeCode,
+                complainNumber,
                 description,
-                tasks,
-                productivityScore,
+                status,
                 date: new Date().toISOString()
             };
             
@@ -1209,42 +1394,34 @@
             
             // Reset form
             document.getElementById('report-form').reset();
-            document.getElementById('tasks-container').innerHTML = '';
             
             // Show report
             showReport(report);
             showProductivityData();
             
             // Add notification
-            addNotification('Laporan Baru', `Laporan "${title}" telah berhasil dibuat`);
+            addNotification('Laporan Baru', `Laporan perbaikan untuk toko ${storeName} telah dibuat`);
         }
 
         function showReport(report) {
             const reportSection = document.getElementById('report-section');
             reportSection.style.display = 'block';
             
-            document.getElementById('report-title-display').textContent = report.title;
+            document.getElementById('report-store-name-display').textContent = report.storeName;
+            document.getElementById('report-store-code-display').textContent = report.storeCode;
+            document.getElementById('report-complain-number-display').textContent = report.complainNumber || '-';
             document.getElementById('report-description-display').textContent = report.description;
             
-            const tasksList = document.getElementById('report-tasks-list');
-            tasksList.innerHTML = '';
+            const statusDisplay = document.getElementById('report-status-display');
+            statusDisplay.textContent = 
+                report.status === 'completed' ? 'Selesai' : 
+                report.status === 'in-progress' ? 'Dalam Proses' : 
+                report.status === 'proposal' ? 'Usulan' : 'Pending';
             
-            report.tasks.forEach(task => {
-                const taskItem = document.createElement('div');
-                taskItem.className = 'flex justify-between py-1 border-b border-gray-200 text-xs';
-                taskItem.innerHTML = `
-                    <span>${task.name}</span>
-                    <span class="px-2 py-1 text-xs rounded-full ${
-                        task.status === 'completed' ? 'bg-green-100 text-green-800' : 
-                        task.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' : 
-                        'bg-red-100 text-red-800'
-                    }">
-                        ${task.status === 'completed' ? 'Selesai' : 
-                          task.status === 'in-progress' ? 'Dalam Proses' : 'Pending'}
-                    </span>
-                `;
-                tasksList.appendChild(taskItem);
-            });
+            statusDisplay.className = 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + 
+                (report.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                 report.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' : 
+                 report.status === 'proposal' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800');
             
             // Store current report ID for edit/delete
             reportSection.setAttribute('data-report-id', report.id);
@@ -1256,32 +1433,11 @@
             if (!report) return;
             
             // Fill form with report data
-            document.getElementById('report-title').value = report.title;
+            document.getElementById('report-store-name').value = report.storeName;
+            document.getElementById('report-store-code').value = report.storeCode;
+            document.getElementById('report-complain-number').value = report.complainNumber;
             document.getElementById('report-description').value = report.description;
-            
-            const tasksContainer = document.getElementById('tasks-container');
-            tasksContainer.innerHTML = '';
-            
-            report.tasks.forEach(task => {
-                const taskItem = document.createElement('div');
-                taskItem.className = 'task-item flex space-x-2 items-center mb-1';
-                taskItem.innerHTML = `
-                    <input type="text" class="task-name flex-1 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" value="${task.name}" required>
-                    <select class="task-status px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs">
-                        <option value="pending" ${task.status === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>Dalam Proses</option>
-                        <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Selesai</option>
-                    </select>
-                    <button type="button" class="remove-task-btn px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs">Hapus</button>
-                `;
-                
-                tasksContainer.appendChild(taskItem);
-                
-                // Add event listener to remove button
-                taskItem.querySelector('.remove-task-btn').addEventListener('click', function() {
-                    tasksContainer.removeChild(taskItem);
-                });
-            });
+            document.getElementById('report-status').value = report.status;
             
             // Hide report display
             document.getElementById('report-section').style.display = 'none';
@@ -1300,33 +1456,20 @@
             const reportIndex = db.reports.findIndex(r => r.id === reportId);
             if (reportIndex === -1) return;
             
-            const title = document.getElementById('report-title').value;
+            const storeName = document.getElementById('report-store-name').value;
+            const storeCode = document.getElementById('report-store-code').value;
+            const complainNumber = document.getElementById('report-complain-number').value;
             const description = document.getElementById('report-description').value;
-            const tasks = [];
-            
-            document.querySelectorAll('.task-item').forEach(taskItem => {
-                tasks.push({
-                    name: taskItem.querySelector('.task-name').value,
-                    status: taskItem.querySelector('.task-status').value
-                });
-            });
-            
-            if (tasks.length === 0) {
-                alert('Harap tambahkan minimal satu tugas');
-                return;
-            }
-            
-            // Calculate productivity score
-            const completedTasks = tasks.filter(t => t.status === 'completed').length;
-            const productivityScore = Math.round((completedTasks / tasks.length) * 100);
+            const status = document.getElementById('report-status').value;
             
             // Update report
             db.reports[reportIndex] = {
                 ...db.reports[reportIndex],
-                title,
+                storeName,
+                storeCode,
+                complainNumber,
                 description,
-                tasks,
-                productivityScore,
+                status,
                 updatedAt: new Date().toISOString()
             };
             
@@ -1334,7 +1477,6 @@
             
             // Reset form
             document.getElementById('report-form').reset();
-            document.getElementById('tasks-container').innerHTML = '';
             document.getElementById('submit-report-btn').textContent = 'Submit Laporan';
             
             // Show updated report
@@ -1342,7 +1484,7 @@
             showProductivityData();
             
             // Add notification
-            addNotification('Laporan Diupdate', `Laporan "${title}" telah berhasil diupdate`);
+            addNotification('Laporan Diupdate', `Laporan perbaikan untuk toko ${storeName} telah diupdate`);
             
             // Restore original submit handler
             document.getElementById('report-form').onsubmit = submitReport;
@@ -1358,11 +1500,10 @@
                 
                 document.getElementById('report-section').style.display = 'none';
                 document.getElementById('report-form').reset();
-                document.getElementById('tasks-container').innerHTML = '';
                 showProductivityData();
                 
                 // Add notification
-                addNotification('Laporan Dihapus', `Laporan "${report.title}" telah dihapus`);
+                addNotification('Laporan Dihapus', `Laporan perbaikan untuk toko ${report.storeName} telah dihapus`);
             }
         }
 
@@ -1398,25 +1539,27 @@
             
             userReports.forEach(report => {
                 const row = document.createElement('tr');
-                const completedTasks = report.tasks.filter(t => t.status === 'completed').length;
                 
                 row.innerHTML = `
                     <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">
                         ${new Date(report.date).toLocaleDateString('id-ID')}
                     </td>
                     <td class="px-3 py-2 text-xs text-gray-500">
-                        ${report.title}
+                        ${report.storeName}
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">
-                        ${completedTasks} dari ${report.tasks.length}
+                        ${report.storeCode}
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            report.productivityScore > 80 ? 'bg-green-100 text-green-800' :
-                            report.productivityScore > 50 ? 'bg-yellow-100 text-yellow-800' :
+                            report.status === 'completed' ? 'bg-green-100 text-green-800' :
+                            report.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
+                            report.status === 'proposal' ? 'bg-blue-100 text-blue-800' :
                             'bg-red-100 text-red-800'
                         }">
-                            ${report.productivityScore}%
+                            ${report.status === 'completed' ? 'Selesai' : 
+                              report.status === 'in-progress' ? 'Dalam Proses' : 
+                              report.status === 'proposal' ? 'Usulan' : 'Pending'}
                         </span>
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap text-right text-xs font-medium">
@@ -1455,7 +1598,7 @@
                         loadReportHistory();
                         
                         // Add notification
-                        addNotification('Laporan Dihapus', `Laporan "${report.title}" telah dihapus`);
+                        addNotification('Laporan Dihapus', `Laporan perbaikan untuk toko ${report.storeName} telah dihapus`);
                     }
                 });
             });
@@ -1606,24 +1749,169 @@
             }
         }
 
+        // ==================== USER MANAGEMENT SYSTEM ====================
+        function addUser(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('user-name').value;
+            const username = document.getElementById('user-username').value;
+            const password = document.getElementById('user-password').value;
+            const role = document.getElementById('user-role').value;
+            const department = document.getElementById('user-department').value;
+            
+            // Check if username already exists
+            if (db.users.some(u => u.username === username)) {
+                alert('Username sudah digunakan');
+                return;
+            }
+            
+            // Create new user
+            const user = {
+                id: Date.now(),
+                name,
+                username,
+                password,
+                role,
+                department,
+                joinDate: new Date().toISOString().split('T')[0]
+            };
+            
+            db.users.push(user);
+            saveToLocalStorage();
+            
+            // Reset form
+            document.getElementById('user-form').reset();
+            
+            // Reload users
+            loadUsers();
+            
+            // Add notification
+            addNotification('User Baru', `User ${name} telah ditambahkan sebagai ${role}`);
+        }
+
+        function loadUsers(searchTerm = '') {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+            
+            let users = db.users;
+            
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                users = users.filter(u => 
+                    u.name.toLowerCase().includes(term) || 
+                    u.username.toLowerCase().includes(term) ||
+                    u.role.toLowerCase().includes(term) ||
+                    u.department.toLowerCase().includes(term)
+                );
+            }
+            
+            if (users.length === 0) {
+                userList.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-3 py-4 text-center text-xs text-gray-500">
+                            Tidak ada user yang ditemukan
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.className = 'text-xs';
+                row.innerHTML = `
+                    <td class="px-3 py-2">${user.name}</td>
+                    <td class="px-3 py-2">${user.username}</td>
+                    <td class="px-3 py-2">${user.role}</td>
+                    <td class="px-3 py-2">${user.department}</td>
+                    <td class="px-3 py-2 text-right">
+                        <button class="text-blue-600 hover:text-blue-900 mr-2 edit-user" data-id="${user.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-900 delete-user" data-id="${user.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                
+                userList.appendChild(row);
+                
+                // Add event listeners to buttons
+                row.querySelector('.edit-user').addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editUser(id);
+                });
+                
+                row.querySelector('.delete-user').addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteUser(id);
+                });
+            });
+        }
+
+        function searchUsers() {
+            const searchTerm = this.value;
+            loadUsers(searchTerm);
+        }
+
+        function editUser(id) {
+            const user = db.users.find(u => u.id === id);
+            if (!user) return;
+            
+            const newName = prompt('Edit nama:', user.name);
+            if (newName === null) return;
+            
+            const newUsername = prompt('Edit username:', user.username);
+            if (newUsername === null) return;
+            
+            const newRole = prompt('Edit role (Administrator/Teknisi):', user.role);
+            if (newRole === null) return;
+            
+            const newDepartment = prompt('Edit departemen:', user.department);
+            if (newDepartment === null) return;
+            
+            // Update user
+            user.name = newName;
+            user.username = newUsername;
+            user.role = newRole;
+            user.department = newDepartment;
+            
+            saveToLocalStorage();
+            loadUsers();
+            
+            // Add notification
+            addNotification('User Diupdate', `Data user ${user.name} telah diperbarui`);
+        }
+
+        function deleteUser(id) {
+            const user = db.users.find(u => u.id === id);
+            
+            if (user && confirm(`Apakah Anda yakin ingin menghapus user ${user.name}?`)) {
+                db.users = db.users.filter(u => u.id !== id);
+                saveToLocalStorage();
+                loadUsers();
+                
+                // Add notification
+                addNotification('User Dihapus', `User ${user.name} telah dihapus`);
+            }
+        }
+
         // ==================== ANALYTICS SYSTEM ====================
         function showProductivityData() {
             // For dashboard - simple stats
-            const todayReport = db.reports
-                .filter(r => r.userId === currentUser.id)
-                .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+            const userReports = db.reports.filter(r => r.userId === currentUser.id);
+            const completedTasks = userReports.filter(r => r.status === 'completed').length;
+            const pendingTasks = userReports.filter(r => r.status === 'pending').length;
             
-            if (todayReport) {
-                const completedTasks = todayReport.tasks.filter(t => t.status === 'completed').length;
-                document.getElementById('tasks-completed').textContent = completedTasks;
-                document.getElementById('efficiency-score').textContent = todayReport.productivityScore + '%';
-                
-                // Simple chart for dashboard
-                updateProductivityChart({
-                    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                    data: [30, 45, 60, 75, 90, todayReport.productivityScore]
-                });
-            }
+            document.getElementById('tasks-completed').textContent = completedTasks;
+            document.getElementById('efficiency-score').textContent = 
+                userReports.length > 0 ? Math.round((completedTasks / userReports.length) * 100) + '%' : '0%';
+            
+            // Simple chart for dashboard
+            updateProductivityChart({
+                labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+                data: [30, 45, 60, 75, 90, userReports.length > 0 ? Math.round((completedTasks / userReports.length) * 100) : 0]
+            });
             
             document.getElementById('analytics-section').style.display = 'block';
         }
@@ -1636,25 +1924,25 @@
             const weeklyData = [0, 0, 0, 0, 0, 0, 0]; // Sun-Sat
             userReports.forEach(report => {
                 const day = new Date(report.date).getDay(); // 0=Sun, 6=Sat
-                weeklyData[day] += report.productivityScore;
+                weeklyData[day] += report.status === 'completed' ? 1 : 0;
             });
             
             // Calculate averages
             const weeklyChartData = {
                 labels: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-                data: weeklyData.map(score => score > 0 ? Math.round(score / userReports.length) : 0)
+                data: weeklyData
             };
             
             // Task distribution - based on all tasks in reports
-            const allTasks = userReports.flatMap(report => report.tasks);
-            const completedTasks = allTasks.filter(t => t.status === 'completed').length;
-            const inProgressTasks = allTasks.filter(t => t.status === 'in-progress').length;
-            const pendingTasks = allTasks.filter(t => t.status === 'pending').length;
+            const completedTasks = userReports.filter(r => r.status === 'completed').length;
+            const inProgressTasks = userReports.filter(r => r.status === 'in-progress').length;
+            const pendingTasks = userReports.filter(r => r.status === 'pending').length;
+            const proposalTasks = userReports.filter(r => r.status === 'proposal').length;
             
             const taskDistributionData = {
-                labels: ['Selesai', 'Dalam Proses', 'Pending'],
-                data: [completedTasks, inProgressTasks, pendingTasks],
-                colors: ['#4f46e5', '#a5b4fc', '#e5e7eb']
+                labels: ['Selesai', 'Dalam Proses', 'Pending', 'Usulan'],
+                data: [completedTasks, inProgressTasks, pendingTasks, proposalTasks],
+                colors: ['#4f46e5', '#a5b4fc', '#e5e7eb', '#818cf8']
             };
             
             // Update charts
@@ -1674,9 +1962,91 @@
             document.getElementById('total-pending-tasks').textContent = pendingTasks;
             
             // Calculate overall productivity score
-            const totalProductivity = userReports.reduce((sum, report) => sum + report.productivityScore, 0);
-            const avgProductivity = userReports.length > 0 ? Math.round(totalProductivity / userReports.length) : 0;
-            document.getElementById('productivity-score').textContent = `${avgProductivity}%`;
+            const totalProductivity = userReports.length > 0 ? 
+                Math.round((completedTasks / userReports.length) * 100) : 0;
+            document.getElementById('productivity-score').textContent = `${totalProductivity}%`;
+        }
+
+        function showTeamProductivityData() {
+            // Team productivity chart - based on all reports
+            const teamReports = db.reports;
+            
+            // Group by user
+            const userProductivity = {};
+            db.users.forEach(user => {
+                const userReports = teamReports.filter(r => r.userId === user.id);
+                const completed = userReports.filter(r => r.status === 'completed').length;
+                const total = userReports.length;
+                
+                userProductivity[user.name] = {
+                    completed,
+                    total,
+                    efficiency: total > 0 ? Math.round((completed / total) * 100) : 0
+                };
+            });
+            
+            // Prepare chart data
+            const teamChartData = {
+                labels: Object.keys(userProductivity),
+                data: Object.values(userProductivity).map(u => u.efficiency)
+            };
+            
+            // Task distribution by status
+            const completedTasks = teamReports.filter(r => r.status === 'completed').length;
+            const inProgressTasks = teamReports.filter(r => r.status === 'in-progress').length;
+            const pendingTasks = teamReports.filter(r => r.status === 'pending').length;
+            const proposalTasks = teamReports.filter(r => r.status === 'proposal').length;
+            
+            const teamTaskDistributionData = {
+                labels: ['Selesai', 'Dalam Proses', 'Pending', 'Usulan'],
+                data: [completedTasks, inProgressTasks, pendingTasks, proposalTasks],
+                colors: ['#4f46e5', '#a5b4fc', '#e5e7eb', '#818cf8']
+            };
+            
+            // Update charts
+            updateTeamProductivityChart(teamChartData);
+            updateTeamTaskDistributionChart(teamTaskDistributionData);
+            
+            // Load team performance table
+            loadTeamPerformanceTable(userProductivity);
+        }
+
+        function loadTeamPerformanceTable(userProductivity) {
+            const performanceList = document.getElementById('team-performance-list');
+            performanceList.innerHTML = '';
+            
+            db.users.forEach(user => {
+                const stats = userProductivity[user.name] || { completed: 0, total: 0, efficiency: 0 };
+                
+                // Calculate average work hours for each user
+                const userAttendance = db.attendance.filter(a => a.userId === user.id && a.duration);
+                const totalMinutes = userAttendance.reduce((sum, att) => sum + att.duration, 0);
+                const avgMinutes = userAttendance.length > 0 ? Math.round(totalMinutes / userAttendance.length) : 0;
+                const avgHours = Math.floor(avgMinutes / 60);
+                const avgMins = avgMinutes % 60;
+                
+                const row = document.createElement('tr');
+                row.className = 'text-xs';
+                row.innerHTML = `
+                    <td class="px-3 py-2">${user.name}</td>
+                    <td class="px-3 py-2">${stats.total}</td>
+                    <td class="px-3 py-2">${stats.completed}</td>
+                    <td class="px-3 py-2">${stats.total - stats.completed}</td>
+                    <td class="px-3 py-2">${stats.total > 0 ? stats.total - stats.completed : 0}</td>
+                    <td class="px-3 py-2">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            stats.efficiency > 80 ? 'bg-green-100 text-green-800' :
+                            stats.efficiency > 50 ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                        }">
+                            ${stats.efficiency}%
+                        </span>
+                    </td>
+                    <td class="px-3 py-2">${avgHours}h ${avgMins}m</td>
+                `;
+                
+                performanceList.appendChild(row);
+            });
         }
 
         function updateProductivityChart(data) {
@@ -1728,7 +2098,7 @@
                 data: {
                     labels: data.labels,
                     datasets: [{
-                        label: 'Produktivitas',
+                        label: 'Perbaikan Selesai',
                         data: data.data,
                         backgroundColor: 'rgba(79, 70, 229, 0.1)',
                         borderColor: '#4f46e5',
@@ -1740,8 +2110,7 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true,
-                            max: 100
+                            beginAtZero: true
                         }
                     },
                     responsive: true,
@@ -1759,6 +2128,67 @@
             
             taskDistributionChart = new Chart(ctx, {
                 type: 'doughnut',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: data.colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateTeamProductivityChart(data) {
+            const ctx = document.getElementById('team-productivity-chart').getContext('2d');
+            
+            if (teamProductivityChart) {
+                teamProductivityChart.destroy();
+            }
+            
+            teamProductivityChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Efisiensi (%)',
+                        data: data.data,
+                        backgroundColor: '#4f46e5',
+                        borderColor: '#4f46e5',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function updateTeamTaskDistributionChart(data) {
+            const ctx = document.getElementById('team-task-distribution-chart').getContext('2d');
+            
+            if (teamTaskDistributionChart) {
+                teamTaskDistributionChart.destroy();
+            }
+            
+            teamTaskDistributionChart = new Chart(ctx, {
+                type: 'pie',
                 data: {
                     labels: data.labels,
                     datasets: [{
@@ -1798,7 +2228,7 @@
         function showReportContent() {
             hideAllContent();
             document.getElementById('report-content').style.display = 'block';
-            document.getElementById('page-title').textContent = 'Laporan Kerja';
+            document.getElementById('page-title').textContent = 'Laporan Perbaikan';
             updateActiveMenu('report-menu');
             loadReportHistory();
         }
@@ -1811,10 +2241,26 @@
             loadTickets();
         }
 
+        function showUserManagementContent() {
+            hideAllContent();
+            document.getElementById('user-management-content').style.display = 'block';
+            document.getElementById('page-title').textContent = 'Manajemen User';
+            updateActiveMenu('user-management-menu');
+            loadUsers();
+        }
+
+        function showTeamProductivityContent() {
+            hideAllContent();
+            document.getElementById('productivity-content').style.display = 'block';
+            document.getElementById('page-title').textContent = 'Produktivitas Team';
+            updateActiveMenu('productivity-menu');
+            showTeamProductivityData();
+        }
+
         function showAnalyticsContent() {
             hideAllContent();
             document.getElementById('analytics-content').style.display = 'block';
-            document.getElementById('page-title').textContent = 'Analisis Produktivitas';
+            document.getElementById('page-title').textContent = 'Analisis Saya';
             updateActiveMenu('analytics-menu');
             showAnalyticsData();
         }
@@ -1824,6 +2270,8 @@
             document.getElementById('attendance-content').style.display = 'none';
             document.getElementById('report-content').style.display = 'none';
             document.getElementById('ticket-content').style.display = 'none';
+            document.getElementById('user-management-content').style.display = 'none';
+            document.getElementById('productivity-content').style.display = 'none';
             document.getElementById('analytics-content').style.display = 'none';
             
             // Reset all menu items
@@ -1861,9 +2309,18 @@
             const historyBody = document.getElementById('attendance-history');
             historyBody.innerHTML = '';
             
-            const userAttendance = db.attendance
-                .filter(a => a.userId === currentUser.id)
-                .sort((a, b) => new Date(b.date) - new Date(a.date));
+            let userAttendance;
+            
+            if (currentUser.role === 'Administrator') {
+                // Admin can see all attendance
+                userAttendance = db.attendance
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else {
+                // Regular users can only see their own attendance
+                userAttendance = db.attendance
+                    .filter(a => a.userId === currentUser.id)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
             
             if (userAttendance.length === 0) {
                 historyBody.innerHTML = `
@@ -1890,7 +2347,16 @@
                     duration = `${hours}h ${minutes}m`;
                 }
                 
+                // Get user name for admin view
+                const user = db.users.find(u => u.id === att.userId);
+                const userName = user ? user.name : 'Unknown';
+                
                 row.innerHTML = `
+                    ${currentUser.role === 'Administrator' ? `
+                    <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">
+                        ${userName}
+                    </td>
+                    ` : ''}
                     <td class="px-3 py-2 whitespace-nowrap text-xs text-gray-500">
                         ${date.toLocaleDateString('id-ID')}
                     </td>
@@ -1917,7 +2383,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
-                    ` : '<td></td>'}
+                    ` : ''}
                 `;
                 
                 historyBody.appendChild(row);
